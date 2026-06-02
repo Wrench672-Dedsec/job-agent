@@ -1,0 +1,39 @@
+{
+  "candidate_id": "sample-001",
+  "resume_raw": "Sample resume text",
+  "education": {
+    "undergrad_school": "Sample University",
+    "undergrad_tier": "211",
+    "grad_school": "Sample HK University",
+    "grad_degree": "Finance",
+    "grad_year": 2027
+  },
+  "experience": [
+    {
+      "company": "Sample Securities",
+      "type": "sell-side",
+      "sector": "healthcare",
+      "role": "Research intern",
+      "duration_months": 6,
+      "key_output": ["Deep-dive report", "DCF model"]
+    }
+  ],
+  "skills": {
+    "modeling": ["DCF", "comps"],
+    "tools": ["Wind", "Python"],
+    "language": ["Chinese", "English"],
+    "sector_knowledge": ["Healthcare policy"]
+  },
+  "target": {
+    "city": ["Shanghai", "Hong Kong"],
+    "job_type": ["sell-side", "buy-side"],
+    "sector": ["healthcare"],
+    "timeline": "2027-03"
+  },
+  "diagnosis": {
+    "match_score": null,
+    "strengths": [],
+    "gaps": [],
+    "last_updated": null
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "jd_id": "jd-001",
+  "company": "Sample Asset Management",
+  "city": "Shanghai",
+  "job_type": "buy-side",
+  "seniority": "analyst",
+  "sector": "healthcare",
+  "hard_requirements": ["2+ years research", "financial modeling"],
+  "soft_requirements": ["bilingual"],
+  "language": "bilingual",
+  "pitch_probability": 0.9,
+  "model_test_probability": 0.6,
+  "source_url": "",
+  "collected_date": "2026-06-02"
+}

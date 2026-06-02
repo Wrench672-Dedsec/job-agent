@@ -1,0 +1,29 @@
+[
+  {
+    "case_id": "case-001",
+    "source": "internal",
+    "authorized": true,
+    "candidate_profile": {
+      "education": "211 undergrad + HK masters",
+      "sector_focus": "healthcare",
+      "prior_experience": "sell-side internship x2",
+      "weakness": "undergrad tier"
+    },
+    "target_job": {
+      "city": "Shanghai",
+      "company_type": "sell-side",
+      "sector": "healthcare"
+    },
+    "problem_type": ["school tier", "pitch depth"],
+    "intervention": {
+      "resume_change": "quantified research outputs",
+      "pitch_prep": "3 healthcare stock pitches",
+      "networking": "faculty referral"
+    },
+    "outcome": "received interviews and an offer",
+    "timeline_weeks": 8,
+    "key_insight": "quality of output offsets pedigree in some teams",
+    "tags": ["sell-side", "healthcare", "Shanghai"],
+    "evidence_chunk": "Candidate improved output quantification and got interviews."
+  }
+]
