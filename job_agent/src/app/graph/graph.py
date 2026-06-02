@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Dict
 
 from langgraph.graph import StateGraph, END
@@ -9,19 +11,55 @@ from app.agents.diagnosis import diagnosis_agent
 from app.agents.rewriter import rewriter_agent
 from app.agents.interview import interview_agent
 from app.agents.networking import networking_agent
+from app.llm import generate_text
 
 
 def final_report_agent(state: InvestmentJobState) -> Dict[str, str]:
-    jd_profile = state.get("jd_profile", {})
-    diagnosis = state.get("diagnosis", {})
-    questions = state.get("interview_questions", [])
-    report = (
-        f"Job type: {jd_profile.get('job_type', 'unknown')}\n"
-        f"City: {jd_profile.get('city', 'unknown')}\n"
-        f"Sector: {jd_profile.get('sector', 'unknown')}\n"
-        f"Match score: {diagnosis.get('match_score', 'n/a')}\n"
-        f"Interview questions: {len(questions)}\n"
+    jd = state.get("jd_profile", {})
+    dx = state.get("diagnosis", {})
+    qs = state.get("interview_questions", [])
+    versions = state.get("resume_versions", {})
+    drafts = state.get("networking_drafts", {})
+
+    # Build a structured prompt that asks the LLM to produce the final report
+    prompt = (
+        "请根据以下各模块输出，生成一份清晰的中文求职分析报告。"
+        "报告应包含：岗位分析、候选人评估、简历改写建议、"
+        "面试准备要点、下周行动计划。请使用 Markdown 格式。
+
+"
+        f"岗位信息：类型={jd.get('job_type')}，城市={jd.get('city')}，行业={jd.get('sector')}
+"
+        f"评估结果：匹配分={dx.get('match_score')}，"
+        f"优势={dx.get('strengths')}，短板={dx.get('gaps')}
+"
+        f"首要改进项={dx.get('recommendation_priority')}
+"
+        f"面试题目（共 {len(qs)} 题，列出前 5 题）：{qs[:5]}
+"
+        f"简历版本关键字：{list(versions.keys())}
+"
+        f"沟通模板已生成：{list(drafts.keys())}
+"
     )
+
+    fallback = (
+        f"# 求职分析报告\n\n"
+        f"## 岗位信息\n"
+        f"- 类型：{jd.get('job_type', 'unknown')}\n"
+        f"- 城市：{jd.get('city', 'unknown')}\n"
+        f"- 行业：{jd.get('sector', 'unknown')}\n\n"
+        f"## 候选人评估\n"
+        f"- 匹配度：{dx.get('match_score', 'n/a')}\n"
+        f"- 优势：{dx.get('strengths', [])}\n"
+        f"- 短板：{dx.get('gaps', [])}\n"
+        f"- 首要改进：{dx.get('recommendation_priority', '')}\n\n"
+        f"## 面试题目（前 5 题）\n"
+        + "\n".join(f"{i+1}. {q}" for i, q in enumerate(qs[:5]))
+        + f"\n\n共 {len(qs)} 题已生成。"
+    )
+
+    report = generate_text(prompt, fallback=fallback)
     return {"final_report": report}
 
 
