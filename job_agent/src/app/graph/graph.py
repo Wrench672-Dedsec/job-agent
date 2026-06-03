@@ -29,58 +29,6 @@ def _route_after_scraper(state: InvestmentJobState) -> str:
     return "rag_retriever"
 
 
-def _route_after_diagnosis(state: InvestmentJobState) -> str:
-    """
-    High match score (>=70) → go straight to rewriter.
-    Low match score        → resume_coach first for gap-filling drills.
-    """
-    diagnosis = state.get("diagnosis") or {}
-    match_score = diagnosis.get("match_score", 0)
-    if match_score >= 70:
-        return "resume_rewriter"
-    return "resume_coach"
-
-
-def _route_after_resume_coach(state: InvestmentJobState) -> str:
-    """After coaching session, always continue to rewriter."""
-    return "resume_rewriter"
-
-
-def _route_after_rewriter(state: InvestmentJobState) -> str:
-    """Always generate cover letters after resume rewrite."""
-    return "cover_letter"
-
-
-def _route_after_cover_letter(state: InvestmentJobState) -> str:
-    """Always build question bank after cover letter."""
-    return "question_bank"
-
-
-def _route_after_question_bank(state: InvestmentJobState) -> str:
-    """Build interview map before running mock interview."""
-    return "interview_map"
-
-
-def _route_after_interview_map(state: InvestmentJobState) -> str:
-    """Run mock interview trainer."""
-    return "interview_trainer"
-
-
-def _route_after_interview(state: InvestmentJobState) -> str:
-    """Build coaching flow plan after interview trainer."""
-    return "coaching_flow"
-
-
-def _route_after_coaching_flow(state: InvestmentJobState) -> str:
-    """Generate networking drafts after coaching flow."""
-    return "networking"
-
-
-def _route_after_networking(state: InvestmentJobState) -> str:
-    """Final step: generate consolidated report."""
-    return "report_generator"
-
-
 # ── graph builder ──────────────────────────────────────────────────────────────
 
 def build_graph() -> StateGraph:
@@ -105,7 +53,7 @@ def build_graph() -> StateGraph:
     graph.set_entry_point("jd_scraper")
 
     # ── edges ──────────────────────────────────────────────────────────────────
-    # jd_scraper → jd_parser (conditional: skip if no JDs collected)
+    # jd_scraper → jd_parser OR rag_retriever (skip parser if no JD input)
     graph.add_conditional_edges(
         "jd_scraper",
         _route_after_scraper,
@@ -115,44 +63,41 @@ def build_graph() -> StateGraph:
         },
     )
 
-    # jd_parser → rag_retriever (always)
+    # jd_parser → rag_retriever
     graph.add_edge("jd_parser", "rag_retriever")
 
-    # rag_retriever → candidate_diagnosis (always)
+    # rag_retriever → candidate_diagnosis
+    # diagnosis writes gaps/strengths into state; downstream agents read it.
+    # It is purely diagnostic — it does NOT gate the pipeline.
     graph.add_edge("rag_retriever", "candidate_diagnosis")
 
-    # candidate_diagnosis → resume_coach OR resume_rewriter
-    graph.add_conditional_edges(
-        "candidate_diagnosis",
-        _route_after_diagnosis,
-        {
-            "resume_coach":    "resume_coach",
-            "resume_rewriter": "resume_rewriter",
-        },
-    )
+    # candidate_diagnosis → resume_coach
+    # resume_coach reads diagnosis.gaps to generate targeted drills.
+    # Every candidate goes through coaching regardless of score.
+    graph.add_edge("candidate_diagnosis", "resume_coach")
 
-    # resume_coach → resume_rewriter (always)
+    # resume_coach → resume_rewriter
     graph.add_edge("resume_coach", "resume_rewriter")
 
-    # resume_rewriter → cover_letter (always)
+    # resume_rewriter → cover_letter
     graph.add_edge("resume_rewriter", "cover_letter")
 
-    # cover_letter → question_bank (always)
+    # cover_letter → question_bank
     graph.add_edge("cover_letter", "question_bank")
 
-    # question_bank → interview_map (always)
+    # question_bank → interview_map
     graph.add_edge("question_bank", "interview_map")
 
-    # interview_map → interview_trainer (always)
+    # interview_map → interview_trainer
     graph.add_edge("interview_map", "interview_trainer")
 
-    # interview_trainer → coaching_flow (always)
+    # interview_trainer → coaching_flow
     graph.add_edge("interview_trainer", "coaching_flow")
 
-    # coaching_flow → networking (always)
+    # coaching_flow → networking
     graph.add_edge("coaching_flow", "networking")
 
-    # networking → report_generator (always)
+    # networking → report_generator
     graph.add_edge("networking", "report_generator")
 
     # report_generator → END
