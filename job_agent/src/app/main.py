@@ -41,12 +41,26 @@ def run_agent(payload: RunRequest) -> RunResponse:
 
     state = payload.model_dump()
     result = _graph.invoke(state)
+
     return RunResponse(
-        jd_profile=result.get("jd_profile", {}),
-        diagnosis=result.get("diagnosis", {}),
-        resume_versions=result.get("resume_versions", {}),
-        interview_questions=result.get("interview_questions", []),
-        networking_drafts=result.get("networking_drafts", {}),
-        rag_cases=result.get("rag_cases", []),
-        final_report=result.get("final_report", ""),
+        # Core
+        jd_profile      = result.get("jd_profile", {}),
+        diagnosis       = result.get("diagnosis", {}),
+        resume_versions = result.get("resume_versions", {}),
+        final_report    = result.get("final_report", ""),
+
+        # Interview pipeline
+        question_bank       = result.get("question_bank", {}),
+        interview_map       = result.get("interview_map", {}),    # Pydantic coerces dict -> InterviewMap
+        interview_questions = result.get("interview_questions", []),  # legacy compat
+
+        # Coaching pipeline
+        coaching_session = result.get("coaching_session", {}),
+        coaching_flow    = result.get("coaching_flow", {}),       # Pydantic coerces dict -> CoachingFlow
+
+        # Supporting
+        cover_letters    = result.get("cover_letters", []),
+        networking_drafts= result.get("networking_drafts", {}),
+        rag_cases        = result.get("rag_cases", []),
+        collected_jds    = result.get("collected_jds", []),
     )
