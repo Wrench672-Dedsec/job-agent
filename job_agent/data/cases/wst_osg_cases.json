@@ -1,0 +1,277 @@
+[
+  {
+    "case_id": "wst_001",
+    "source": "WST",
+    "candidate": {
+      "school": "University of Hong Kong",
+      "degree": "本科",
+      "graduation_year": "2027",
+      "major": null,
+      "location": "香港",
+      "internships": ["IBD日常实习（未具名）"],
+      "target_role": "买方投资分析",
+      "target_industry": "PE/VC（Fintech方向）"
+    },
+    "problem_type": ["技术基础薄弱", "职业方向不明确", "行为面薄弱"],
+    "initial_diagnosis": "三张报表勾稽关系不清晰；行为面无法回答为什么选IBD；无明确职业定位",
+    "interventions": [
+      "1小时能力扫描，明确IBD+Fintech双线发展规划",
+      "并购底稿与pitchbook制作训练",
+      "行业研究框架与简单估值模型搭建",
+      "Fintech专项：支付处理费模型、央行数字货币冲击分析、LBO模型拆解",
+      "多轮模拟面试（终面前一晚强化）"
+    ],
+    "outcome": "红杉资本北京办公室 2026 Fintech Summer Intern Offer",
+    "key_insight": "实习里没有小事，每一条数据都能变成面试里的子弹",
+    "evidence_chunks": [
+      "技术面连三张报表的勾稽关系都说不清楚，行为面被问为什么选IBD也说不出个所以然",
+      "他在项目里负责整理一家消费公司的渠道返利数据时，记住了WST导师说过的话",
+      "终面前一晚，WST导师给他做了多轮模拟面试，学生沉着地按WST教的办法从容作答"
+    ]
+  },
+  {
+    "case_id": "wst_002",
+    "source": "WST",
+    "candidate": {
+      "school": "Georgetown University",
+      "degree": "本科",
+      "graduation_year": "2028",
+      "major": null,
+      "location": "美国",
+      "internships": [],
+      "target_role": "财富管理实习",
+      "target_industry": "投行财富管理 Asset and Wealth Management"
+    },
+    "problem_type": ["简历背景碎片化", "Networking话术错误", "面试框架缺失"],
+    "initial_diagnosis": "仅凭兴趣投递，无专业化背景包装；连续投递十几家企业均未获面试；networking方向不聚焦",
+    "interventions": [
+      "简历与过往经历全面重塑，碎片化背景专业化打磨",
+      "定制财富管理方向Networking话术（聚焦产品逻辑与资产配置策略）",
+      "匹配多位前投行财富管理导师担任模拟考官，高强度刷题与框架训练"
+    ],
+    "outcome": "Goldman Sachs New York City Office 2027 Asset and Wealth Management Summer Intern Offer",
+    "key_insight": "财富管理核心是帮客户规避决策风险，而非单纯追求收益率",
+    "evidence_chunks": [
+      "连续投递十几家企业，始终无缘面试机会",
+      "导师指导她财富管理校友更乐于交流产品逻辑与资产配置策略，而非泛泛的职业发展话题",
+      "从只看收益率的行业爱好者，成长为懂得测算风险、挖掘客户真实需求的准从业者"
+    ]
+  },
+  {
+    "case_id": "wst_003",
+    "source": "WST",
+    "candidate": {
+      "school": "Cornell University",
+      "degree": "本科",
+      "graduation_year": "2027",
+      "major": "金融工程",
+      "location": "美国",
+      "internships": [],
+      "target_role": "量化研究实习",
+      "target_industry": "量化私募 股票量化深度学习方向"
+    },
+    "problem_type": ["缺乏量化实战经验", "投递节奏混乱", "技术表达弱", "回测方法理解不足"],
+    "initial_diagnosis": "数据处理规范、回测方法、统计检验原理存在明显短板；投递被动无系统计划",
+    "interventions": [
+      "Tech Skills：因子数据去极值/中性化/标准化；单因子分层回测；Barra风格因子；组合优化约束",
+      "Soft Skills：技术面表达训练（问题定义到行动步骤到结果评估）；行为面结构化回答训练",
+      "Networking：针对量化从业者的定向问询邮件撰写",
+      "简历逐条复盘：将模糊过程描述改为具体技术陈述，附可验证量化指标",
+      "多轮模拟面试，逐题演练常见量化面试问题"
+    ],
+    "outcome": "衍盛 Beijing Office 2026 股票量化研究深度学习方向暑期实习 Offer",
+    "key_insight": "量化简历每项成果必须附有可验证的量化指标及数据处理步骤说明",
+    "evidence_chunks": [
+      "在数据处理规范、回测方法理解及统计检验原理等方面存在明显短板",
+      "导师指导学生在表述时从模糊的过程性描述改为具体的技术陈述，要求每项成果均附有可验证的量化指标",
+      "导师与学生进行了多轮模拟面试，逐题演练常见量化面试问题"
+    ]
+  },
+  {
+    "case_id": "wst_004",
+    "source": "WST",
+    "candidate": {
+      "school": "Duke University",
+      "degree": "本科",
+      "graduation_year": "2028",
+      "major": null,
+      "location": "美国",
+      "internships": ["本地小公司暑期实习"],
+      "target_role": "Sales and Trading实习",
+      "target_industry": "投行S&T"
+    },
+    "problem_type": ["背景院校竞争压力大", "缺乏S&T行业认知", "面试前焦虑"],
+    "initial_diagnosis": "不知道如何与沃顿Stern学生竞争；不了解S&T真正考察什么；错误地认为GPA是决定因素",
+    "interventions": [
+      "导师重构认知：S&T看重市场嗅觉、压力决策、风险控制而非GPA",
+      "每日市场复盘习惯养成：隔夜经济数据、央行讲话、地缘事件+美股期货预判",
+      "将扑克经历打磨成行为面故事（期望值计算到风险收益比认知）",
+      "针对目标投行的大量定向练习（市场新闻解读、产品定价逻辑）",
+      "模拟面试强化临场冷静"
+    ],
+    "outcome": "Bank of America New York City Office 2027 Sales and Trading Summer Intern Offer",
+    "key_insight": "S&T面试不靠背答案，靠交易感：快速决策、风险意识、市场直觉",
+    "evidence_chunks": [
+      "Sales and Trading部门招的不是传统意义上的学霸，而是那些对市场有敏锐嗅觉、能在压力下快速决策的人",
+      "将在扑克比赛中的真实经历打磨成一个生动有力的行为面试故事",
+      "整个面试过程中始终保持着相对冷静的状态，这让他自己都有些意外"
+    ]
+  },
+  {
+    "case_id": "wst_005",
+    "source": "WST",
+    "candidate": {
+      "school": "University of Hong Kong",
+      "degree": "硕士（准研一）",
+      "graduation_year": "2027",
+      "major": null,
+      "location": "香港",
+      "internships": [],
+      "target_role": "Sales and Trading实习",
+      "target_industry": "投行S&T（香港）"
+    },
+    "problem_type": ["职业方向模糊", "简历叙事弱以课程为主", "求职节奏无规划"],
+    "initial_diagnosis": "准研一入学有金融梦但方向模糊；简历停留在我学过什么层面；无系统求职节奏",
+    "interventions": [
+      "Tech Skills：从Accounting到Stock Pitch逐项过关",
+      "Soft Skills：行为面训练+Market News分析打磨",
+      "Networking：Cold Email写法+Coffee Chat信息转化技巧",
+      "简历改造：从学过什么转为用数据解决了什么业务问题",
+      "按学期和假期制定技能补充与实习申请节点计划",
+      "中信里昂面试专项准备+如何跟进HR进展的邮件指导"
+    ],
+    "outcome": "中信里昂 Hong Kong Office 2026 Sales and Trading Summer Intern Offer",
+    "key_insight": "简历从我学过什么到我的行为如何驱动了某个具体决策是核心升级点",
+    "evidence_chunks": [
+      "简历从初版我学过什么，到后面说我用数据解决了什么业务问题",
+      "每一段都能讲出他的行为如何驱动了某个具体决策",
+      "规划导师同步帮他整理了相关资料以及帮他匹配导师进行Interview Mock"
+    ]
+  },
+  {
+    "case_id": "osg_001",
+    "source": "OSG",
+    "candidate": {
+      "school": "Princeton University",
+      "degree": "本科（大二）",
+      "graduation_year": "2028",
+      "major": "运筹学、金融工程",
+      "location": "美国",
+      "internships": ["北美本地买方相关实习（OSG协助获取）"],
+      "target_role": "L/S Equity买方投资",
+      "target_industry": "对冲基金"
+    },
+    "problem_type": ["买方知识体系需从零构建", "Stock pitch能力不足", "简历优势展示不足"],
+    "initial_diagnosis": "大一加入求职前瞻意识强但买方知识体系空白；需系统构建stock pitch与business sense",
+    "interventions": [
+      "匹配技术面与行为面Buyside导师",
+      "从零构建stock pitch和business sense训练体系",
+      "简历精细化重塑突出运筹学金融工程可迁移能力",
+      "协助获取多份北美买方铺垫性实习",
+      "多位对冲基金导师多轮模拟面试针对pitch逻辑拆解与表达薄弱点高频训练",
+      "Citadel面试专项：强化行业动态理解与知识应用"
+    ],
+    "outcome": "Citadel New York Office L/S Equity 2027 暑期实习 Offer",
+    "key_insight": "头部对冲基金面试核心是pitch的逻辑严密性加被grill时的稳定应答",
+    "evidence_chunks": [
+      "志在买方。经过不到一年的高强度学习与持续积累",
+      "从各个角度grill学员的pitch，针对学员在逻辑拆解与表达呈现中的薄弱点进行高频训练",
+      "在学员获得城堡的面试机会后，导师团队进一步安排知名对冲基金方向导师资源"
+    ]
+  },
+  {
+    "case_id": "osg_002",
+    "source": "OSG",
+    "candidate": {
+      "school": "Oxford University",
+      "degree": "本科（大三）",
+      "graduation_year": "2027",
+      "major": "数学",
+      "location": "英国",
+      "internships": ["英国本地铺垫性实习（OSG协助获取）"],
+      "target_role": "固收与宏观交易实习",
+      "target_industry": "对冲基金"
+    },
+    "problem_type": ["金融基础为零数学背景转金融", "个人故事表达不足", "行业赛道认知空白"],
+    "initial_diagnosis": "纯数学背景年底紧急加入；需从零梳理行业划分与职业兴趣；简历未突出理科优势",
+    "interventions": [
+      "从零系统梳理行业划分与岗位分工",
+      "匹配技术面与行为面导师夯实金融基础",
+      "打磨个人故事表达",
+      "简历精细化润色突出理科背景优势",
+      "协助获取英国本地铺垫性实习",
+      "多轮模拟面试针对逻辑与表达问题密集训练",
+      "Citadel面试专项：固收与宏观方向知识深化"
+    ],
+    "outcome": "Citadel London Office 固收与宏观交易 2026 暑期实习 Offer",
+    "key_insight": "理科背景转金融的关键是将数学能力转化为可见的金融应用场景叙事",
+    "evidence_chunks": [
+      "导师团队第一时间从零为其系统梳理行业划分，并引导其挖掘职业兴趣",
+      "OSG导师对学员简历进行了精细化润色，突出理科背景优势",
+      "针对面试中暴露出的逻辑与表达问题进行密集训练与针对性纠正"
+    ]
+  },
+  {
+    "case_id": "osg_003",
+    "source": "OSG",
+    "candidate": {
+      "school": "UC Berkeley",
+      "degree": "本科（大二）",
+      "graduation_year": "2028",
+      "major": "经济、艺术史",
+      "location": "美国",
+      "internships": ["多段铺垫性实习（OSG协助获取）"],
+      "target_role": "买方投资实习",
+      "target_industry": "对冲基金（香港）"
+    },
+    "problem_type": ["双专业背景定位模糊", "对冲基金知识体系为零", "需提前长期布局"],
+    "initial_diagnosis": "高三暑假加入目标明确但基础为零；双专业背景经济加艺术史需最大化优势挖掘",
+    "interventions": [
+      "定制长期成长规划结合双专业背景最大化优势",
+      "多位对冲基金导师系统讲授金融市场基础与投资逻辑",
+      "定期技术测评与实战练习",
+      "行为面导师梳理个人经历亮点转化为说服力强的故事素材",
+      "协助获取多段铺垫性实习",
+      "Stock pitch专项训练（亚太买方导师手把手教学）",
+      "高压追问下的反应速度与回答质量训练"
+    ],
+    "outcome": "Millennium HK Office 买方投资部 2027 暑期实习 Offer",
+    "key_insight": "买方面试需展现兼具严谨分析与独立判断的投资思维，stock pitch是核心考察点",
+    "evidence_chunks": [
+      "学员目标始终非常明确，志在冲刺买方。由于对冲基金赛道的门槛高，学员在高三暑假便早早加入OSG",
+      "安排资深亚太买方导师手把手教学stock pitch等买方所重视的题目",
+      "帮助他在面试中展现出兼具严谨分析与独立判断的投资思维"
+    ]
+  },
+  {
+    "case_id": "osg_004",
+    "source": "OSG",
+    "candidate": {
+      "school": "Rice University（推测）",
+      "degree": "本科",
+      "graduation_year": null,
+      "major": "不明（有量化研究、咨询、市场等多元背景）",
+      "location": "美国",
+      "internships": ["Rice Student Venture Fund", "铺垫性实习（OSG协助）"],
+      "target_role": "S&T加量化研究（双线）",
+      "target_industry": "投行S&T和量化对冲基金"
+    },
+    "problem_type": ["经历零散无主线叙事", "自我介绍变流水账", "信息差导致低效求职", "不会讲故事"],
+    "initial_diagnosis": "冰球运动员加创业加学生基金加量化研究等多元背景，但简历什么都沾什么都不尖；自我介绍讲成流水账；零散努力未形成体系",
+    "interventions": [
+      "主导师帮助梳理经历主线与个人标签定位",
+      "自我介绍改造：从流水账转为背后稳定的价值观与判断逻辑",
+      "反复追问训练：这件事为什么重要、你为什么做这个选择、说明你是什么样的人",
+      "S&T方向：市场反馈机制理解、反应速度与市场直觉训练",
+      "量化方向：研究深度与策略系统化表达训练",
+      "心理辅导：在关键时刻稳住求职节奏，避免对比内耗"
+    ],
+    "outcome": "S&T Offer 加量化研究 Offer（具体机构未披露）",
+    "key_insight": "一个讲得清自己故事的人才能真正说服别人；好的自我介绍不是列出做过的事而是让别人看到背后那个稳定的你",
+    "evidence_chunks": [
+      "我身上的元素太多了，如果没有人帮忙梳理，简历上很容易写成什么都沾但什么都不尖",
+      "导师们不是简单帮我把句子变漂亮，而是不断追问我：这件事为什么重要、你为什么会做这个选择",
+      "好的自我介绍不是把做过的事情都列出来，而是让别人看到背后那个稳定的你"
+    ]
+  }
+]
