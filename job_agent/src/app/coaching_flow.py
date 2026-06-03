@@ -7,7 +7,6 @@ Compatible with the existing LangGraph graph in graph.py.
 from __future__ import annotations
 
 import json
-import os
 from pathlib import Path
 from typing import Any
 
@@ -26,26 +25,52 @@ def load_taxonomy() -> dict[str, Any]:
         return json.load(f)
 
 
-def match_role(target_city: str, target_sector: str) -> dict[str, Any] | None:
-    """Return the best-matching role entry for city + sector."""
-    taxonomy = load_taxonomy()
+def match_role(target_city: str, target_sector: str, taxonomy: dict | None = None) -> dict[str, Any] | None:
+    """Return the best-matching role entry for city + sector.
+
+    Scoring: sum of len(keyword) for each keyword that is a substring of
+    sector_lower.  Longer phrase matches score higher, resolving ambiguity
+    between roles that share short keywords (e.g. both buy/sell share
+    \u8986\u76d6 but sellside also matches \u884c\u4e1a\u8986\u76d6, \u7eaa\u8981 etc.).
+
+    Phase 1: highest-scoring city-matched role with score > 0.
+    Phase 2: fallback to city-matched role with highest sector_depth when no
+              keyword matches at all.
+    """
+    if taxonomy is None:
+        taxonomy = load_taxonomy()
+
     city_lower = target_city.lower()
     sector_lower = target_sector.lower()
+    depth_order = {"very_high": 4, "high": 3, "medium": 2, "low": 1}
 
-    # Exact city + sector keyword match
+    scored: list[tuple[int, dict]] = []
     for role in taxonomy.get("roles", []):
         city_match = any(city_lower in c.lower() for c in role.get("city", []))
-        sector_kw = " ".join(role.get("benchmark_jd_keywords", []) + [role["label"]]).lower()
-        sector_match = any(kw in sector_lower for kw in sector_kw.split())
-        if city_match and sector_match:
-            return role
+        if not city_match:
+            continue
+        candidates = (
+            role.get("benchmark_jd_keywords", [])
+            + role.get("en_aliases", [])
+            + [role["label"]]
+        )
+        score = sum(len(kw) for kw in candidates if kw.lower() in sector_lower)
+        scored.append((score, role))
 
-    # Fallback: city-only match, return first
-    for role in taxonomy.get("roles", []):
-        if any(city_lower in c.lower() for c in role.get("city", [])):
-            return role
+    if not scored:
+        return None
 
-    return None
+    scored.sort(key=lambda x: x[0], reverse=True)
+    best_score, best_role = scored[0]
+    if best_score > 0:
+        return best_role
+
+    # Fallback: no keyword hit — return highest sector_depth role in city
+    return sorted(
+        [r for _, r in scored],
+        key=lambda r: depth_order.get(r.get("sector_depth", "low"), 0),
+        reverse=True,
+    )[0]
 
 
 # ---------------------------------------------------------------------------
@@ -146,9 +171,9 @@ def build_networking_prompt(
         f"Target firm types: {firm_types}\n"
         f"{lang_note}\n"
         f"Write 3 networking outreach drafts:\n"
-        f"(A) Cold LinkedIn DM to a research analyst (≤100 words)\n"
-        f"(B) Referral request to a mutual contact (≤120 words)\n"
-        f"(C) Follow-up after a coffee chat (≤80 words)\n"
+        f"(A) Cold LinkedIn DM to a research analyst (\u2264100 words)\n"
+        f"(B) Referral request to a mutual contact (\u2264120 words)\n"
+        f"(C) Follow-up after a coffee chat (\u226480 words)\n"
         f"Each draft must mention a specific insight from the JD analysis.\n\n"
         f"Resume snippet (background only):\n{resume_text[:600]}\n\n"
         f"JD Analysis:\n{jd_analysis}"
@@ -191,22 +216,11 @@ def run_coaching_flow(
 
     role = match_role(target_city, target_sector)
 
-    # Agent 1: JD parse
     jd_analysis = llm_fn(build_jd_parse_prompt(jd_text, role))
-
-    # Agent 2: Candidate diagnosis
     diagnosis = llm_fn(build_diagnosis_prompt(resume_text, jd_analysis, role))
-
-    # Agent 3: Resume rewrite
     resume_versions = llm_fn(build_resume_rewrite_prompt(resume_text, diagnosis, role))
-
-    # Agent 4: Interview questions
     interview_questions = llm_fn(build_interview_prompt(jd_analysis, diagnosis, role))
-
-    # Agent 5: Networking drafts
     networking_drafts = llm_fn(build_networking_prompt(resume_text, jd_analysis, role))
-
-    # Agent 6: Case retrieval
     case_retrieval = llm_fn(build_case_retrieval_prompt(diagnosis, role))
 
     return {
