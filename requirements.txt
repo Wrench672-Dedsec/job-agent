@@ -1,0 +1,7 @@
+# job-agent dependencies
+requests>=2.31.0
+schedule>=1.2.0
+pytz>=2024.1
+
+# optional: only needed if APIFY_TOKEN is set
+# apify-client>=1.6.0
