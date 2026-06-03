@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Pytest (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    defaults:
+      run:
+        working-directory: job_agent
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install only test deps — no real LLM / vector DB needed for smoke tests
+          pip install pytest pytest-mock
+          # Install the package itself in editable mode (no extras)
+          pip install -e ./src --no-deps 2>/dev/null || true
+
+      - name: Run smoke tests
+        run: |
+          pytest tests/test_e2e_pipeline.py -v --tb=short
+        env:
+          # Prevent any accidental real API calls
+          OPENAI_API_KEY: "sk-fake-key-for-ci"
+          ANTHROPIC_API_KEY: "fake-anthropic-key-for-ci"
+
+  lint:
+    name: Ruff lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: job_agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint
+        run: |
+          ruff check src/app/agents/ src/app/graph/ --select E,F,W --ignore E501
+        continue-on-error: true  # lint failures are warnings until codebase is clean

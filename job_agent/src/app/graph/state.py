@@ -31,38 +31,49 @@ class InvestmentJobState(TypedDict, total=False):
     # ── question bank outputs ─────────────────────────────────────────────────
     question_bank: Dict[str, Any]  # technical/behavioral/stock_pitch_drills/meta
 
-    # ── interview_map outputs (NEW) ───────────────────────────────────────────
+    # ── interview_map outputs ─────────────────────────────────────────────────
     interview_map: Dict[str, Any]
     # {
-    #   job_type: str,
-    #   city: str,
-    #   sector: str,
-    #   rounds: [
-    #     {
-    #       round: int,
-    #       label: str,
-    #       modules: [str],
-    #       focus: str,
-    #       questions: [{q, type, eval}],
-    #       follow_ups: [str],
-    #     }
-    #   ],
-    #   mock_plan: {
-    #     total_questions: int,
-    #     estimated_minutes: int,
-    #     round_breakdown: [...],
-    #     session_order: [str],
-    #   },
+    #   job_type, city, sector,
+    #   rounds: [{round, label, modules, focus, questions, follow_ups}],
+    #   mock_plan: {total_questions, estimated_minutes, round_breakdown, session_order},
     #   coaching_tips: str,
     # }
 
-    # ── interview agent outputs (legacy: 10 Qs flat list) ─────────────────────
+    # ── interview agent outputs (legacy flat list) ────────────────────────────
     interview_questions: List[str]
     mock_answers: List[str]
     scores: Dict[str, Any]
 
     # ── resume coach outputs ──────────────────────────────────────────────────
     coaching_session: Dict[str, Any]
+    # {
+    #   internship_drills: [{internship_index, excerpt, recall_questions}],
+    #   pitch_scaffold: {pitch_template, drill_questions},
+    #   usage_note: str,
+    # }
+
+    # ── coaching_flow outputs ─────────────────────────────────────────────────
+    coaching_flow: Dict[str, Any]
+    # {
+    #   phases: [
+    #     {
+    #       phase_id: int,
+    #       phase_name: str,
+    #       status: "pending" | "active" | "done",
+    #       source: str,
+    #       description: str,
+    #       llm_intro: str,
+    #       items: [...],
+    #       item_count: int,
+    #     }
+    #   ],
+    #   overall_progress: {total_phases, completed, pct},
+    #   next_action: str,
+    #   coaching_tips: [str],
+    #   weekly_plan: {days: [...], total_hours, key_milestones},
+    #   meta: {job_type, sector, total_items},
+    # }
 
     # ── networking outputs ────────────────────────────────────────────────────
     networking_drafts: Dict[str, Any]
