@@ -2,21 +2,36 @@ name: CI
 
 on:
   push:
-    branches: [main, dev]
+    branches: ["main", "dev"]
+    paths:
+      - "job_agent/**"
+      - ".github/workflows/ci.yml"
   pull_request:
-    branches: [main]
+    branches: ["main"]
+    paths:
+      - "job_agent/**"
+      - ".github/workflows/ci.yml"
 
 jobs:
-  test:
-    name: Pytest (Python ${{ matrix.python-version }})
+  # ── JOB 1: Unit tests（no LLM calls，fast，always runs）──────────────────
+  unit-test:
+    name: Unit Tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.11", "3.12"]
 
     defaults:
       run:
         working-directory: job_agent
+
+    env:
+      OPENAI_API_KEY: sk-stub
+      ANTHROPIC_API_KEY: sk-stub
+      LLM_PROVIDER: openai
+      LLM_MODEL: gpt-4o-mini
 
     steps:
       - name: Checkout
@@ -27,38 +42,82 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
+          cache-dependency-path: job_agent/requirements.txt
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Install only test deps — no real LLM / vector DB needed for smoke tests
-          pip install pytest pytest-mock
-          # Install the package itself in editable mode (no extras)
-          pip install -e ./src --no-deps 2>/dev/null || true
+          pip install -r requirements.txt
+          pip install httpx pytest-asyncio anyio[trio]
 
-      - name: Run smoke tests
-        run: |
-          pytest tests/test_e2e_pipeline.py -v --tb=short
-        env:
-          # Prevent any accidental real API calls
-          OPENAI_API_KEY: "sk-fake-key-for-ci"
-          ANTHROPIC_API_KEY: "fake-anthropic-key-for-ci"
+      - name: Run API unit tests
+        run: pytest tests/test_api_run.py -v --tb=short
 
-  lint:
-    name: Ruff lint
+      - name: Run graph smoke test
+        run: pytest tests/test_smoke.py -v --tb=short
+
+      - name: Upload pytest logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-logs-py${{ matrix.python-version }}
+          path: job_agent/.pytest_cache/
+          retention-days: 7
+
+  # ── JOB 2: E2E（requires real API keys，skipped if secret absent）─────────
+  e2e-test:
+    name: E2E Pipeline Test
     runs-on: ubuntu-latest
+    if: ${{ secrets.OPENAI_API_KEY != '' }}
+
     defaults:
       run:
         working-directory: job_agent
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: job_agent/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-mock httpx
+
+      - name: Run e2e pipeline tests
+        run: pytest tests/test_e2e_pipeline.py -v --tb=short
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  # ── JOB 3: Lint（fast，always runs）───────────────────────────────────────
+  lint:
+    name: Ruff Lint
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: job_agent
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
+
       - name: Install ruff
         run: pip install ruff
+
       - name: Lint
+        continue-on-error: true
         run: |
           ruff check src/app/agents/ src/app/graph/ --select E,F,W --ignore E501
-        continue-on-error: true  # lint failures are warnings until codebase is clean
