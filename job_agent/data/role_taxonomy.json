@@ -1,0 +1,84 @@
+{
+  "version": "0.1.0",
+  "updated": "2026-06-03",
+  "roles": [
+    {
+      "id": "buyside_ra_cn",
+      "label": "买方研究员（A股/港股）",
+      "city": ["Shanghai", "Beijing", "Shenzhen"],
+      "firm_types": ["公募基金", "私募股权", "对冲基金"],
+      "language": "zh",
+      "core_skills": ["财务建模", "行业研究", "stock pitch", "实地调研", "估值"],
+      "interview_style": "buyside",
+      "sector_depth": "high",
+      "pitch_format": "中文买方pitch：投资逻辑 + 催化剂 + 风险",
+      "benchmark_jd_keywords": ["研究员", "基本面", "覆盖", "深度报告", "调研"],
+      "weakness_signals": ["无A股实习", "仅卖方经历", "英文pitch无经验"]
+    },
+    {
+      "id": "buyside_ra_hk",
+      "label": "买方研究员（HK外资）",
+      "city": ["Hong Kong"],
+      "firm_types": ["外资基金", "对冲基金", "主权基金"],
+      "language": "en",
+      "core_skills": ["financial modeling", "equity research", "stock pitch", "risk/reward framework", "earnings revision"],
+      "interview_style": "buyside",
+      "sector_depth": "high",
+      "pitch_format": "EN buyside pitch: thesis + 3 catalysts + bear case + upside/downside",
+      "benchmark_jd_keywords": ["analyst", "coverage", "fundamental", "long/short", "valuation"],
+      "weakness_signals": ["no English pitch experience", "no HK market exposure", "mainland-only internships"]
+    },
+    {
+      "id": "sellside_ra_cn",
+      "label": "卖方研究员（国内券商）",
+      "city": ["Shanghai", "Beijing", "Shenzhen"],
+      "firm_types": ["中信证券", "国泰君安", "海通证券", "中金公司"],
+      "language": "zh",
+      "core_skills": ["财务建模", "行业深度", "调研纪要", "路演", "数据挖掘"],
+      "interview_style": "sellside",
+      "sector_depth": "very_high",
+      "pitch_format": "中文卖方：行业判断 + 核心逻辑 + 盈利预测 + 目标价",
+      "benchmark_jd_keywords": ["研究员", "行业覆盖", "纪要", "路演", "深度报告"],
+      "weakness_signals": ["无覆盖行业实习", "无路演经历", "纯量化背景"]
+    },
+    {
+      "id": "sellside_ra_hk",
+      "label": "卖方研究员（HK外资券商）",
+      "city": ["Hong Kong"],
+      "firm_types": ["Goldman Sachs", "Morgan Stanley", "UBS", "CLSA", "Jefferies"],
+      "language": "en",
+      "core_skills": ["financial modeling", "sector research", "note writing", "client presentations", "DCF"],
+      "interview_style": "sellside",
+      "sector_depth": "high",
+      "pitch_format": "EN sellside: initiation / thematic / event-driven note structure",
+      "benchmark_jd_keywords": ["research analyst", "initiation", "coverage universe", "earnings model", "note"],
+      "weakness_signals": ["no sell-side note writing", "no Bloomberg experience", "no English client communication"]
+    },
+    {
+      "id": "healthcare_policy_ra",
+      "label": "医疗政策研究员",
+      "city": ["Beijing", "Shanghai", "Hong Kong"],
+      "firm_types": ["咨询公司", "智库", "基金会", "政策机构", "投资机构医疗组"],
+      "language": "zh",
+      "core_skills": ["政策解读", "成本效益分析", "医保研究", "数据分析", "报告写作"],
+      "interview_style": "policy",
+      "sector_depth": "high",
+      "pitch_format": "政策分析框架：背景 + 政策内容 + 利益相关方 + 效果评估",
+      "benchmark_jd_keywords": ["医保", "政策研究", "卫生经济", "DRG", "集采"],
+      "weakness_signals": ["无政策实操经历", "仅学术背景", "无量化分析能力"]
+    },
+    {
+      "id": "quant_analyst",
+      "label": "量化研究员",
+      "city": ["Shanghai", "Shenzhen", "Beijing", "Hong Kong"],
+      "firm_types": ["量化私募", "CTA基金", "量化多头", "外资投行量化部"],
+      "language": "zh",
+      "core_skills": ["Python", "因子研究", "回测", "机器学习", "时序分析"],
+      "interview_style": "quant",
+      "sector_depth": "low",
+      "pitch_format": "量化逻辑：因子构建 + 回测结果 + 容量分析 + 衰减分析",
+      "benchmark_jd_keywords": ["量化", "因子", "策略", "回测", "alpha"],
+      "weakness_signals": ["无实盘经验", "仅理论建模", "无高频数据经验"]
+    }
+  ]
+}
